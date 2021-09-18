@@ -1,0 +1,13 @@
+import Web3 from 'web3';
+
+// declare global {
+//   interface Window {
+//     ethereum: Ethereumish
+//   }
+// }
+
+window.ethereum.request({ method: 'eth_requestAccounts' });
+
+const web3 = new Web3(window.ethereum);
+
+export default web3;
