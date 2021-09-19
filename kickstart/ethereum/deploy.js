@@ -1,6 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-const { interface, bytecode } = require('./compile');
+const compiledFactory = require('./build/CampaignFactory.json');
 const { ACCOUNT_MNEMONIC, INFURA_API } = require('./config/config');
 
 const provider = new HDWalletProvider(ACCOUNT_MNEMONIC, INFURA_API);
@@ -13,11 +13,10 @@ const deploy = async () => {
   const accBalance = await web3.eth.getBalance(accounts[0]);
   console.log('Acc balance: ', accBalance);
 
-  const result = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({ data: bytecode })
+  const result = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
+    .deploy({ data: compiledFactory.bytecode })
     .send({ gas: '1000000', gasPrice: '5000000000', from: accounts[0] });
 
-  console.log('Interface: ', interface);
   console.log('Contract deployed to', result.options.address);
 };
 deploy();
