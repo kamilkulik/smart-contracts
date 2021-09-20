@@ -1,17 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import factory from '../ethereum/factory';
 
-function CampaignIndex() {
-  const loadUpData = useCallback(async () => {
-    const campaigns = await factory.methods.getDeployedCampaigns().call();
+export async function getServerSideProps() {
+  const campaigns = await factory.methods.getDeployedCampaigns().call();
+  return { props: { campaigns } };
+}
 
-    console.log(campaigns);
-  }, []);
-
-  useEffect(() => {
-    loadUpData;
-  }, []);
-  return <h1>Show</h1>;
+function CampaignIndex({ campaigns }: { campaigns: string[] }) {
+  return <h1>{campaigns[0]}</h1>;
 }
 
 export default CampaignIndex;
