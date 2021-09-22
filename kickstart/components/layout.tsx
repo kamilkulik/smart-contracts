@@ -1,15 +1,18 @@
 import React, { ReactNode } from 'react';
+import { Container } from 'semantic-ui-react';
 import Header from './header';
 
 type LayoutProps = {
   children: ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <Container>
       <Header />
       {children}
-    </div>
+    </Container>
   );
 };
+
+export default Layout;

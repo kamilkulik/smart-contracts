@@ -1,8 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
-import 'semantic-ui-css/semantic.min.css';
 import factory from '../ethereum/factory';
 import { Button, Card } from 'semantic-ui-react';
-import { Layout } from '../components/layout';
+import Layout from '../components/layout';
 
 export async function getServerSideProps() {
   const campaigns = await factory.methods.getDeployedCampaigns().call();
@@ -29,8 +28,8 @@ function CampaignIndex({ campaigns }: { campaigns: string[] }) {
   return (
     <React.Fragment>
       <h3>Open Campaigns</h3>
+      <Button content="Create Campaign" floated="right" icon="add circle" primary />
       {renderCampaigns()}
-      <Button content="Create Campaign" icon="add circle" primary />
     </React.Fragment>
   );
 }
