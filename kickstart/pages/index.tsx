@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
+import Link from 'next/link';
 import factory from '../ethereum/factory';
 import { Button, Card } from 'semantic-ui-react';
 import Layout from '../components/layout';
@@ -16,7 +17,9 @@ function CampaignIndex({ campaigns }: { campaigns: string[] }) {
           <Card.Content>
             <Card.Header>{campaign}</Card.Header>
             <Card.Description>
-              <a>View Campaign</a>
+              <Link href={`/campaigns/${campaign}`}>
+                <a>View Campaign</a>
+              </Link>
             </Card.Description>
           </Card.Content>
         </Card>
@@ -28,7 +31,17 @@ function CampaignIndex({ campaigns }: { campaigns: string[] }) {
   return (
     <React.Fragment>
       <h3>Open Campaigns</h3>
-      <Button content="Create Campaign" floated="right" icon="add circle" primary />
+      <Link href="/campaigns/new">
+        <a>
+          <Button
+            content="Create Campaign"
+            floated="right"
+            icon="add 
+      circle"
+            primary
+          />
+        </a>
+      </Link>
       {renderCampaigns()}
     </React.Fragment>
   );
