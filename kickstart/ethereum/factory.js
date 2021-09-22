@@ -1,5 +1,5 @@
-import web3 from './web3';
-import CampaignFactory from './build/CampaignFactory.json';
+const web3 = require('./web3');
+const CampaignFactory = require('./build/CampaignFactory.json');
 
 // campaignFactory contract instance
 const instance = new web3.eth.Contract(
@@ -7,4 +7,4 @@ const instance = new web3.eth.Contract(
   '0x74be888ba471C2fFcAAfcAE4E29930e2Afc648b3'
 );
 
-export default instance;
+module.exports = instance;
