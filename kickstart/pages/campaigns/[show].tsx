@@ -2,19 +2,21 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/layout';
 import Campaign from '../../ethereum/campaign';
-import { Card } from 'semantic-ui-react';
+import { Card, Grid } from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
+import ContributeForm from '../../components/contributeForm';
 
 type ContractSummaryProps = {
   props: ContractSummary;
 };
 
 type ContractSummary = {
-  minimumContribution: string;
+  contractAddress: string;
   contractBalance: string;
-  pendingRequests: string;
-  contributorsCount: string;
   contractManager: string;
+  contributorsCount: string;
+  minimumContribution: string;
+  pendingRequests: string;
 };
 
 export const getServerSideProps = async ({ params }): Promise<ContractSummaryProps> => {
@@ -30,6 +32,7 @@ export const getServerSideProps = async ({ params }): Promise<ContractSummaryPro
 
   return {
     props: {
+      contractAddress: params.show,
       minimumContribution: minimumContribution,
       contractBalance: contractBalance,
       pendingRequests: pendingRequests,
@@ -40,15 +43,13 @@ export const getServerSideProps = async ({ params }): Promise<ContractSummaryPro
 };
 
 const CampaignShow: React.FunctionComponent<ContractSummary> = ({
-  minimumContribution,
+  contractAddress,
   contractBalance,
-  pendingRequests,
-  contributorsCount,
   contractManager,
+  contributorsCount,
+  minimumContribution,
+  pendingRequests,
 }) => {
-  const router = useRouter();
-  const { show } = router.query;
-
   const renderCards = () => {
     const items = [
       {
@@ -84,8 +85,13 @@ const CampaignShow: React.FunctionComponent<ContractSummary> = ({
 
   return (
     <Layout>
-      <h3>{`Campaign: ${show}`}</h3>
-      {renderCards()}
+      <h3>{`Campaign: ${contractAddress}`}</h3>
+      <Grid>
+        <Grid.Column width="10">{renderCards()}</Grid.Column>
+        <Grid.Column width="6">
+          <ContributeForm address={contractAddress} />
+        </Grid.Column>
+      </Grid>
     </Layout>
   );
 };
