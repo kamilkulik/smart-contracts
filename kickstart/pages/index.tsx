@@ -33,13 +33,7 @@ function CampaignIndex({ campaigns }: { campaigns: string[] }) {
       <h3>Open Campaigns</h3>
       <Link href="/campaigns/new">
         <a>
-          <Button
-            content="Create Campaign"
-            floated="right"
-            icon="add 
-      circle"
-            primary
-          />
+          <Button content="Create Campaign" floated="right" icon="add circle" primary />
         </a>
       </Link>
       {renderCampaigns()}
