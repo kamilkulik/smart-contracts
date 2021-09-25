@@ -1,8 +1,8 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Layout from '../../components/layout';
 import Campaign from '../../ethereum/campaign';
-import { Card, Grid } from 'semantic-ui-react';
+import { Button, Card, Grid } from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
 import ContributeForm from '../../components/contributeForm';
 
@@ -87,10 +87,21 @@ const CampaignShow: React.FunctionComponent<ContractSummary> = ({
     <Layout>
       <h3>{`Campaign: ${contractAddress}`}</h3>
       <Grid>
-        <Grid.Column width="10">{renderCards()}</Grid.Column>
-        <Grid.Column width="6">
-          <ContributeForm address={contractAddress} />
-        </Grid.Column>
+        <Grid.Row>
+          <Grid.Column width="10">{renderCards()}</Grid.Column>
+          <Grid.Column width="6">
+            <ContributeForm address={contractAddress} />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Link href={`/campaigns/${contractAddress}/requests`}>
+              <a>
+                <Button primary>Requests</Button>
+              </a>
+            </Link>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     </Layout>
   );
