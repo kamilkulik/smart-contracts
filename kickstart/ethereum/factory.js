@@ -4,7 +4,7 @@ const CampaignFactory = require('./build/CampaignFactory.json');
 // campaignFactory contract instance
 const instance = new web3.eth.Contract(
   JSON.parse(CampaignFactory.interface),
-  '0xF0C84A7Ecaf0Db282E86deC09936eb7DEf8BA69D'
+  '0x4F11b79d07bD121c923d72719DFb6aDd9b38fd54'
 );
 
 module.exports = instance;
