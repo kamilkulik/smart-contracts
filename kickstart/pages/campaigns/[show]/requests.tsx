@@ -17,19 +17,16 @@ export async function getServerSideProps({ params: { show: address } }) {
   const campaign = Campaign(address);
   const requestCount = await campaign.methods.getRequestCount().call();
   const approversCount = await campaign.methods.approversCount().call();
-  let mappedRequests: Request[] = [];
-  if (requestCount > 0) {
-    const requests = await Promise.all(
-      Array(requestCount)
-        .fill(0)
-        .map((element, index) => {
-          return campaign.methods.requests(index).call();
-        })
-    );
-    mappedRequests = requests.map(({ approvalCount, complete, description, recipient, value }) => {
-      return { approvalCount, complete, description, recipient, value };
-    });
-  }
+  const requests = await Promise.all(
+    Array(parseInt(requestCount))
+      .fill(0)
+      .map((element, index) => {
+        return campaign.methods.requests(index).call();
+      })
+  );
+  const mappedRequests = requests.map(({ approvalCount, complete, description, recipient, value }) => {
+    return { approvalCount, complete, description, recipient, value };
+  });
 
   return { props: { address, approversCount, mappedRequests, requestCount } };
 }
@@ -48,7 +45,9 @@ const RequestIndexPage = ({ address, approversCount, mappedRequests, requestCoun
       <h3>Requests</h3>
       <Link href={`/campaigns/${address}/requests/new`}>
         <a>
-          <Button primary>Add Request</Button>
+          <Button floated="right" primary style={{ marginBottom: '10px' }}>
+            Add Request
+          </Button>
         </a>
       </Link>
       <Table>
@@ -63,6 +62,7 @@ const RequestIndexPage = ({ address, approversCount, mappedRequests, requestCoun
         </Header>
         <Body>{renderRows()}</Body>
       </Table>
+      <div>Found: {requestCount} requests</div>
     </Layout>
   );
 };
